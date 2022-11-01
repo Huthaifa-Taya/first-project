@@ -1,2 +1,4 @@
 greeting_message = "Hello World!"
-puts greeting_message
+puts "Please Enter your Name: "
+name = gets
+puts (greeting_message + name)
