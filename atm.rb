@@ -39,6 +39,7 @@ while entered_pass_phrase != password_phrase and !out_of_login_trials
   end
 end
 
+
 #Keeps asking the user to input a withdrawal amount as long as they do not exceed the max attempts
 # for withdrawal and the amount is not correct or bigger than the limit of the balance.
 while !has_drawn and is_logged_in and !out_of_amount_trials
