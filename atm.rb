@@ -22,9 +22,8 @@ entered_amount = 0
 is_logged_in = false
 has_drawn = false
 
-#As long the user did not exceed the limit number of attempts and the entered phrase isn't correct
-#the loop continues
-while entered_pass_phrase != password_phrase and !out_of_login_trials
+#Login handling method
+def login_handler(login_trials, max_login_trial_count, password_phrase)
   if login_trials < max_login_trial_count
     puts "Please enter the pass-phrase: "
     entered_pass_phrase = gets.chomp #gets rid of the newline for the input
@@ -37,11 +36,12 @@ while entered_pass_phrase != password_phrase and !out_of_login_trials
   else
     out_of_login_trials = true
   end
+  is_logged_in
 end
 
-#Keeps asking the user to input a withdrawal amount as long as they do not exceed the max attempts
-# for withdrawal and the amount is not correct or bigger than the limit of the balance.
-while !has_drawn and is_logged_in and !out_of_amount_trials
+
+#cash withdrawal handling method
+def cash_withdraw_handler(amount_trials, balance_total_amount, max_amount_trial_count)
   if amount_trials < max_amount_trial_count
     puts "Enter the desired amount"
     entered_amount = gets.chomp.to_f #Removes the new line and converts the string to float
@@ -69,5 +69,27 @@ while !has_drawn and is_logged_in and !out_of_amount_trials
     #The user ran out of withdrawal attempts
     out_of_amount_trials = true
   end
+end
+
+##################################################################################################
+#                                        Main
+##################################################################################################
+
+##################################################################################################
+#  LOGIN
+##################################################################################################
+#As long the user did not exceed the limit number of attempts and the entered phrase isn't correct
+#the loop continues
+while entered_pass_phrase != password_phrase and !out_of_login_trials
+  is_logged_in = login_handler(login_trials, max_login_trial_count, password_phrase)
+end
+
+##################################################################################################
+#  Withdrawal
+##################################################################################################
+#Keeps asking the user to input a withdrawal amount as long as they do not exceed the max attempts
+# for withdrawal and the amount is not correct or bigger than the limit of the balance.
+while !has_drawn and is_logged_in and !out_of_amount_trials
+  cash_withdraw_handler(amount_trials, balance_total_amount, max_amount_trial_count)
 end
 
