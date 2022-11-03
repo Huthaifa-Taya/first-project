@@ -6,9 +6,9 @@ end
 
 def enter_validate_salary (wasta_message)
   print "Kindly enter your monthly salary:  "
-  monthly_salary = gets.chomp.to_f #takes the input from user as a float
+  monthly_salary = gets.chomp.to_i #takes the input from user as an integer
   raise RangeError, "Invalid Salary" unless monthly_salary > 0 # raises an error from range type if entered value is 0 or less
-  raise RangeError, wasta_message if monthly_salary > 5000.0 # raises an error from range type if entered value is larger than 5000
+  raise RangeError, wasta_message if monthly_salary > 5000 # raises an error from range type if entered value is larger than 5000
   monthly_salary
 end
 
