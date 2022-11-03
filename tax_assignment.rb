@@ -26,3 +26,8 @@ def map_salary_to_tax_cat (salary)
   end
   tax_percentage
 end
+def calc_print_tax (salary, tax_percentage)
+  tax_amount = salary * tax_percentage
+  salary_and_tax_message = "Your total salary is #{salary} and your tax is #{tax_amount} net salary is #{salary - tax_amount}"
+  puts salary_and_tax_message
+end
