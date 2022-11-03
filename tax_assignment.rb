@@ -29,22 +29,22 @@ end
 
 def calc_print_tax (salary, tax_percentage)
   tax_amount = salary * tax_percentage
-  salary_and_tax_message = "Your total salary is #{salary} and your tax is #{tax_amount} net salary is #{salary - tax_amount}"
-  puts salary_and_tax_message
+  puts "Your total salary is #{salary} and your tax is #{tax_amount} net salary is #{salary - tax_amount}"
 end
 
 def main (wasta_message)
   #prints greeting message to the user and asks to input username and password
-  greeting_message = "Greetings dear citizen\n please enter your national account credentials to continue\nEnter your username"
-  puts greeting_message
+  puts "Greetings dear citizen\n please enter your national account credentials to continue\nEnter your username"
   entered_user_name = gets.chomp
   puts "Enter your password"
   entered_password = gets.chomp
   puts "press any key to continue ..."
   gets # to prevents the program to proceed until the user presses any key
   is_logged_in = login entered_user_name, entered_password
-  puts "incorrect username or password" unless is_logged_in
-  return unless is_logged_in # if credentials are incorrect return and halt the execution
+  unless is_logged_in
+    puts "incorrect username or password"
+    return
+  end
   begin
     user_salary = enter_validate_salary wasta_message
     tax_percentage = map_salary_to_tax_cat user_salary
