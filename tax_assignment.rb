@@ -12,3 +12,17 @@ def enter_validate_salary
   raise RangeError,wasta_message if monthly_salary > 5000.0
   monthly_salary
 end
+def map_salary_to_tax_cat (salary)
+  tax_percentage = 0
+  case salary
+  when 0..1000
+    tax_percentage = 0.001
+  when 1000..2000
+    tax_percentage = 0.005
+  when 2000..3001
+    tax_percentage = 0.01
+  else
+    tax_percentage = 0.02
+  end
+  tax_percentage
+end
