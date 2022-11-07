@@ -24,41 +24,42 @@ class UserInput
   end
 
   def operate_again_or_exit
-    puts "Please enter Yes/Ok to make another operation or enter anything to exit"
-    options_and_operations unless gets.chomp.downcase in ["ok", 'yes']
+    puts "\nPlease enter Yes/Ok/yes/ok/Y/O/y/o to make another operation or enter anything to exit"
+    abort "Good bye!" unless %w[ok yes y o].include? gets.chomp.downcase
+    options_and_operations
   end
 
   def operate_according_to_choice(choice_number)
     case choice_number
     when 1
-      p @user_inputs_array
+      print @user_inputs_array
     when 2
-      p @user_inputs_array.sort
+      print @user_inputs_array.sort
     when 3
-      p @user_inputs_array.sort.reverse
+      print @user_inputs_array.sort.reverse
     when 4
-      p @user_inputs_array.max
+      print @user_inputs_array&.max
     when 5
-      p @user_inputs_array.min
+      print @user_inputs_array&.min
     when 7
-      p "Kindly enter the desired index"
+      print "Kindly enter the desired index"
       entered_index = gets.chomp.to_i
-      unless (0...@input_array_length).include? entered_index
-        p "please enter a valid number between 0 - #{@input_array_length - 1}"
+      unless (-@input_array_length...@input_array_length).include? entered_index
+        p "please enter a valid number between -#{ @input_array_length } - #{@input_array_length - 1}"
         entered_index = gets.chomp.to_i
       end
-      p "#{@user_inputs_array[entered_index]} was deleted from the original array"
+      print "\n#{@user_inputs_array[entered_index]} was deleted from the original array"
       @user_inputs_array.delete_at entered_index
-      p "Result array is #{@user_inputs_array}"
+      print "\nResult array is \n#{@user_inputs_array}"
     when 8
       @user_inputs_array = @user_inputs_array.uniq
-      p @user_inputs_array
+      print "\n", @user_inputs_array, "\n"
     when 9
-      p @user_inputs_array.join ","
+      print "\n", (@user_inputs_array.join ","), "\n"
     when 10
-      p "Enter a number: "
+      print "\nEnter a number: \n"
       edge_number = gets.chomp.to_i
-      p @user_inputs_array.filter { |element| element > edge_number }
+      print "\n",(@user_inputs_array.filter { |element| element > edge_number })
     when 6
       sixth_input_msg = "In which positions shall the element added to?\n1 - to the end?\n2- to the First\n3- at any index?"
       puts sixth_input_msg
@@ -67,17 +68,13 @@ class UserInput
         puts "Kindly enter a valid number", sixth_input_msg
         append_position_choice = gets.chomp.to_i
       end
-      p "Enter the new element: "
+      puts "Enter the new element: "
       new_element = gets.chomp.to_i
       case append_position_choice
       when 1
-        p "Original array before appending #{new_element} is", @user_inputs_array
-        @user_inputs_array.push new_element
-        p "New array is:",@user_inputs_array
+        array_push_or_unshift(new_element, :push)
       when 2
-        p "Original array before appending #{new_element} is", @user_inputs_array
-        @user_inputs_array.unshift new_element
-        p "New array is:",@user_inputs_array
+        array_push_or_unshift(new_element, :unshift)
       else
         p "Please enter the index at which: "
         target_index = gets.chomp.to_i
@@ -85,11 +82,13 @@ class UserInput
           p "Kindly enter a valid index (positive integer number) or (negative number that is not less than -#{@input_array_length}"
           target_index = gets.chomp.to_i
         end
-        p "Original array before appending #{new_element} at #{ target_index } index is", @user_inputs_array
-        @user_inputs_array[target_index]
-        p @user_inputs_array
+        print "\nOriginal array before appending #{new_element} at index #{ target_index } is\n", @user_inputs_array
+        @user_inputs_array[target_index] = new_element
+        print "\n", @user_inputs_array, "\n"
       end
     else
+      puts "Invalid option"
+      options_and_operations
     end
   end
 
@@ -103,6 +102,14 @@ class UserInput
 
   def get_user_inputs
     (0...@input_array_length).each { |index| @user_inputs_array[index] = @user.get_user_input "Please enter value number #{index + 1}" }
+  end
+
+  private
+
+  def array_push_or_unshift(new_element, add_method)
+    print "\nOriginal array before appending #{new_element} is\n", @user_inputs_array
+    @user_inputs_array.method(add_method).call new_element
+    print "\nNew array is:\n", @user_inputs_array
   end
 
 end
