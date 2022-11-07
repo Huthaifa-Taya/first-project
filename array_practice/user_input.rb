@@ -78,12 +78,12 @@ class UserInput
       else
         p "Please enter the index at which: "
         target_index = gets.chomp.to_i
-        until target_index >= -@input_array_length
+        until  (0..(@input_array_length - 1)).include? target_index
           p "Kindly enter a valid index (positive integer number) or (negative number that is not less than -#{@input_array_length}"
           target_index = gets.chomp.to_i
         end
         print "\nOriginal array before appending #{new_element} at index #{ target_index } is\n", @user_inputs_array
-        @user_inputs_array[target_index] = new_element
+        @user_inputs_array.insert target_index, new_element
         print "\n", @user_inputs_array, "\n"
       end
     else
