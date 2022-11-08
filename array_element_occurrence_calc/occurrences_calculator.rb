@@ -35,7 +35,6 @@ class OccurrencesCalculator
       print "\n#{error}\n"
       abort "The above error occurred during the execution of #{__method__} inside #{self.class} class in #{File.basename(__FILE__)} file"
     else
-      puts @unique_elements_array, @hashed_array_keys
       count_number_of_occurrences
       puts "final hash after counting is #{@hashed_array_keys}"
     end
